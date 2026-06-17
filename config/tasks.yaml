@@ -1,0 +1,80 @@
+# Task Definitions
+# Defines common tasks and multi-agent collaboration workflows
+
+feature_tasks:
+  product_image_prompt:
+    description: "生成商品图Prompt"
+    workflow:
+      - "读取 ProductRule.md"
+      - "应用 Prompt.md 模板"
+      - "参照 GemPrompt.md 示例"
+      - "输出四宫格中文Prompt"
+    validation:
+      - "不增加不存在的元素"
+      - "保持产品100%一致"
+      - "比例463:278"
+
+  pptx_catalog:
+    description: "生成PPTX商品目录"
+    workflow:
+      - "读取Input/模板"
+      - "填充产品数据"
+      - "生成布局"
+      - "导出PPTX"
+
+  html_catalog:
+    description: "生成HTML商品目录"
+    workflow:
+      - "启动 catalog/server.js"
+      - "访问 catalog/index.html"
+      - "预览商品目录"
+
+system_tasks:
+  project_onboarding:
+    description: "新项目接入"
+    playbook: "playbooks/project_onboarding.md"
+  feature_development:
+    description: "功能开发"
+    playbook: "playbooks/full_feature.md"
+  bugfix:
+    description: "Bug修复"
+    playbook: "playbooks/emergency_bugfix.md"
+  code_review:
+    description: "代码审查"
+    playbook: "playbooks/code_review.md"
+  release:
+    description: "版本发布"
+    playbook: "playbooks/release_process.md"
+  multi_agent_collaboration:
+    description: "多智能体协作"
+    playbook: "playbooks/multi_agent_collaboration.md"
+
+# Multi-agent pipeline
+multi_agent_pipeline:
+  name: "电商内容生成流水线"
+  agents:
+    - workflow_orchestrator
+    - product_analyst
+    - prompt_engineer
+    - content_reviewer
+    - catalog_generator
+    - html_catalog_generator
+  flow:
+    - from: workflow_orchestrator
+      to: product_analyst
+      action: "启动分析"
+    - from: product_analyst
+      to: prompt_engineer
+      action: "传递产品需求"
+    - from: prompt_engineer
+      to: content_reviewer
+      action: "提交Prompt审查"
+    - from: content_reviewer
+      to: catalog_generator
+      action: "审查通过，启动目录生成"
+    - from: catalog_generator
+      to: html_catalog_generator
+      action: "PPTX就绪，启动HTML生成"
+    - from: html_catalog_generator
+      to: workflow_orchestrator
+      action: "全部完成，返回结果"

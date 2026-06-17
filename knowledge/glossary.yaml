@@ -1,0 +1,74 @@
+# Structured Glossary
+# Machine-readable version of knowledge/glossary.md
+
+glossary:
+  - term: "Agent"
+    category: "AI Agent"
+    description: "核心AI实体，通过交互工具执行软件开发任务"
+    see_also: ["Agent State", "Tool Calling"]
+
+  - term: "Agent State"
+    category: "AI Agent"
+    description: "Agent的当前上下文和状态"
+    see_also: ["Agent"]
+
+  - term: "Prompt"
+    category: "AI Agent"
+    description: "向语言模型发送的指令文本"
+    see_also: ["System Prompt"]
+
+  - term: "System Prompt"
+    category: "AI Agent"
+    description: "定义AI行为边界和角色的顶层指令"
+    see_also: ["Prompt"]
+
+  - term: "Context Window"
+    category: "AI Agent"
+    description: "语言模型一次可处理的Token数量上限"
+
+  - term: "CoT"
+    category: "AI Agent"
+    description: "Chain of Thought，引导模型逐步推理的提示技术"
+    full: "Chain of Thought"
+
+  - term: "Tool Calling"
+    category: "AI Agent"
+    description: "语言模型调用外部工具的能力"
+
+  - term: "SKU"
+    category: "E-commerce"
+    description: "库存量单位，唯一标识商品的编码"
+    full: "Stock Keeping Unit"
+
+  - term: "SPU"
+    category: "E-commerce"
+    description: "标准化产品单元，代表一类商品的集合"
+    full: "Standard Product Unit"
+
+  - term: "Gem Image"
+    category: "E-commerce"
+    description: "京东AI商品图生成工具"
+
+  - term: "四宫格细节图"
+    category: "E-commerce"
+    description: "商品展示图分割为四个区域，分别展示不同细节部位"
+
+  - term: "AGENTS.md"
+    category: "Project Structure"
+    description: "项目根级别的AI行为指令文件"
+
+  - term: "Rules"
+    category: "Project Structure"
+    description: "目录 rules/，包含AI行为规则文件"
+
+  - term: "Playbooks"
+    category: "Project Structure"
+    description: "目录 playbooks/，包含标准操作流程"
+
+  - term: "Templates"
+    category: "Project Structure"
+    description: "目录 templates/，包含文档标准模板"
+
+  - term: "Knowledge"
+    category: "Project Structure"
+    description: "目录 knowledge/，包含项目知识库"

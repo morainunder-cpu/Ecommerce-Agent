@@ -1,0 +1,37 @@
+# Rule Configuration Index
+# Central index of all rules, playbooks, templates, prompts
+
+priorities:
+  - source: "用户指令"
+    priority: 1
+  - source: "Agents.md"
+    priority: 2
+  - source: "rules/*"
+    priority: 3
+  - source: "playbooks/*"
+    priority: 4
+  - source: "templates/*"
+    priority: 5
+  - source: "prompts/*"
+    priority: 6
+  - source: "项目约定"
+    priority: 7
+
+rules_index:
+  architecture: "rules/architecture.md"
+  coding: "rules/coding.md"
+  context: "rules/context.md"
+  debug: "rules/debug.md"
+  git: "rules/git.md"
+  output: "rules/output.md"
+  planning: "rules/planning.md"
+  review: "rules/review.md"
+  safety: "rules/safety.md"
+  summarize: "rules/summarize.md"
+
+playbooks_index:
+  code_review: "playbooks/code_review.md"
+  bugfix: "playbooks/emergency_bugfix.md"
+  feature: "playbooks/full_feature.md"
+  onboarding: "playbooks/project_onboarding.md"
+  release: "playbooks/release_process.md"

@@ -1,0 +1,15 @@
+---
+description: Coding standards for this project
+globs: **/*.{js,html,css,json}
+---
+
+# Coding Standards
+
+- Minimal changes only
+- No unrelated modifications
+- Readable code over clever code
+- Follow existing style
+- Use kebab-case for file names
+- UTF-8 encoding without BOM
+
+See `rules/coding.md` for full details.

@@ -1,0 +1,396 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工装图册 - 可编辑版</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --bg: #f5f2ec;
+    --card-bg: #ffffff;
+    --text: #2c2c2c;
+    --subtext: #666;
+    --accent: #e8913a;
+    --blue: #3a6ea5;
+    --border: #e0dcd5;
+    --price: #c0392b;
+    --tag-bg: #fef3e4;
+    --page-w: 840px;
+    --page-h: 1220px;
+  }
+
+  body {
+    background: #e8e4dc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+  }
+
+  /* ===== PAGE CONTAINER ===== */
+  .page {
+    width: var(--page-w);
+    min-height: var(--page-h);
+    background: white;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+    border-radius: 2px;
+    padding: 60px 50px 50px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* ===== EDIT MODE TOGGLE ===== */
+  .toolbar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+  }
+  .toolbar button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .btn-edit {
+    background: #2c2c2c;
+    color: white;
+  }
+  .btn-edit.active {
+    background: #e8913a;
+  }
+  .btn-export {
+    background: #f0f0f0;
+    color: #333;
+  }
+  .btn-export:hover { background: #ddd; }
+
+  /* ===== HEADER ===== */
+  .header {
+    text-align: center;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .header .category-tag {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding: 4px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+  }
+  .header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .header .subtitle {
+    font-size: 14px;
+    color: var(--subtext);
+    letter-spacing: 2px;
+  }
+
+  /* ===== PRODUCT GRID ===== */
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    flex: 1;
+  }
+
+  /* ===== PRODUCT CARD ===== */
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
+  }
+  .product-card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+  }
+
+  .card-image {
+    width: 100%;
+    height: 320px;
+    background: #f9f7f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .card-image:hover img { transform: scale(1.03); }
+  .card-image .image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: #bbb;
+    text-align: center;
+  }
+  .card-image .image-placeholder svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.3;
+  }
+  .card-image .image-placeholder span {
+    font-size: 13px;
+  }
+  .card-image input[type=file] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .card-body {
+    padding: 24px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+  }
+
+  .card-body .product-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 1px;
+  }
+
+  .card-body .product-desc {
+    font-size: 13px;
+    color: var(--subtext);
+    line-height: 1.6;
+  }
+
+  .card-body .features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .card-body .feature-tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    background: var(--tag-bg);
+    color: var(--accent);
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  .card-body .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+  }
+  .card-body .price-symbol {
+    font-size: 16px;
+    color: var(--price);
+    font-weight: 600;
+  }
+  .card-body .price-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--price);
+  }
+  .card-body .price-unit {
+    font-size: 12px;
+    color: var(--subtext);
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #aaa;
+    letter-spacing: 1px;
+  }
+  .footer .page-num {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* ===== EDITABLE ===== */
+  [contenteditable="true"]:focus {
+    outline: 2px dashed var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+    background: rgba(232,145,58,0.05);
+  }
+  .editing [contenteditable="true"] {
+    cursor: text;
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; border-radius: 0; }
+    .toolbar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button class="btn-edit" onclick="toggleEdit()" id="editBtn">✏️ 编辑模式</button>
+  <button class="btn-export" onclick="window.print()">🖨️ 打印/导出</button>
+</div>
+
+<div class="page" id="page">
+  
+  <!-- HEADER -->
+  <div class="header">
+    <div class="category-tag" contenteditable="false">WORKWEAR CATALOG</div>
+    <h1 contenteditable="false">工装图册</h1>
+    <div class="subtitle" contenteditable="false">专业工装 · 安全防护 · 品质保障</div>
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <div class="product-grid">
+    
+    <!-- Product 1: 反光背心 -->
+    <div class="product-card">
+      <div class="card-image" id="img1-container">
+        <div class="image-placeholder" id="img1-placeholder">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="6" y="10" width="36" height="28" rx="3"/>
+            <circle cx="18" cy="22" r="5"/>
+            <path d="M6 34l10-8 6 5 8-6 12 9"/>
+          </svg>
+          <span>点击上传反光背心图片</span>
+        </div>
+        <input type="file" accept="image/*" onchange="handleImage(this, 'img1-container', 'img1-placeholder')" title="上传图片">
+      </div>
+      <div class="card-body">
+        <div class="product-name" contenteditable="false">反光背心</div>
+        <div class="product-desc" contenteditable="false">高亮反光条设计，夜间作业安全防护必备，透气网眼面料，四季通用</div>
+        <div class="features">
+          <span class="feature-tag" contenteditable="false">安全防护</span>
+          <span class="feature-tag" contenteditable="false">反光警示</span>
+          <span class="feature-tag" contenteditable="false">透气网眼</span>
+        </div>
+        <div class="price-row">
+          <span class="price-symbol">¥</span>
+          <span class="price-value" contenteditable="false">35</span>
+          <span class="price-unit">/件</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2: 春夏工作服 -->
+    <div class="product-card">
+      <div class="card-image" id="img2-container">
+        <div class="image-placeholder" id="img2-placeholder">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="6" y="10" width="36" height="28" rx="3"/>
+            <circle cx="18" cy="22" r="5"/>
+            <path d="M6 34l10-8 6 5 8-6 12 9"/>
+          </svg>
+          <span>点击上传工作服图片</span>
+        </div>
+        <input type="file" accept="image/*" onchange="handleImage(this, 'img2-container', 'img2-placeholder')" title="上传图片">
+      </div>
+      <div class="card-body">
+        <div class="product-name" contenteditable="false">春夏工作服</div>
+        <div class="product-desc" contenteditable="false">精选棉涤面料，多口袋实用设计，耐磨抗皱，适合工厂车间日常穿着</div>
+        <div class="features">
+          <span class="feature-tag" contenteditable="false">多口袋</span>
+          <span class="feature-tag" contenteditable="false">耐磨抗皱</span>
+          <span class="feature-tag" contenteditable="false">棉涤面料</span>
+        </div>
+        <div class="price-row">
+          <span class="price-symbol">¥</span>
+          <span class="price-value" contenteditable="false">85</span>
+          <span class="price-unit">/套</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span contenteditable="false">© 2024 工装图册 · 专业工作服供应商</span>
+    <span class="page-num" contenteditable="false">01 / 12</span>
+  </div>
+
+</div>
+
+<script>
+  let isEditing = false;
+  
+  function toggleEdit() {
+    isEditing = !isEditing;
+    const page = document.getElementById('page');
+    const btn = document.getElementById('editBtn');
+    const editables = page.querySelectorAll('[contenteditable="false"]');
+    
+    if (isEditing) {
+      editables.forEach(el => el.setAttribute('contenteditable', 'true'));
+      page.classList.add('editing');
+      btn.textContent = '✅ 完成编辑';
+      btn.classList.add('active');
+    } else {
+      editables.forEach(el => el.setAttribute('contenteditable', 'false'));
+      page.classList.remove('editing');
+      btn.textContent = '✏️ 编辑模式';
+      btn.classList.remove('active');
+    }
+  }
+  
+  function handleImage(input, containerId, placeholderId) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const container = document.getElementById(containerId);
+      const placeholder = document.getElementById(placeholderId);
+      if (placeholder) placeholder.remove();
+      // Remove existing img if any
+      const existingImg = container.querySelector('img:not(.keep)');
+      if (existingImg) existingImg.remove();
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.alt = '产品图片';
+      container.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+---
+description: E-commerce specific rules for product image generation
+globs: **/*.md
+---
+
+# E-commerce Rules
+
+## Product Image Prompt
+
+- Follow `ProductRule.md` for product constraints
+- Use `Prompt.md` as the output template
+- Reference `GemPrompt.md` for examples
+- Output must be Chinese
+
+## Prohibited
+
+- Never add elements not described
+- Never add logo, buttons, extra pockets
+- Never change colors or fabric
+- Keep product 100% consistent with the source
+
+## Format
+
+- Ratio: 463:278
+- Quality: 4K
+- Style: E-commerce photography, natural lighting

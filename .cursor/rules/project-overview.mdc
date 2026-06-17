@@ -1,0 +1,35 @@
+---
+description: Ecommerce-Agent project overview and entry point
+globs: *
+alwaysApply: true
+---
+
+# Ecommerce-Agent
+
+This is an AI agent operating system for e-commerce scenarios.
+
+## Entry Point
+
+Start by reading `Agents.md` for the complete AI behavior instructions.
+
+## Quick Reference
+
+| Action | Reference |
+|--------|----------|
+| Understand the project | `playbooks/project_onboarding.md` |
+| Develop a feature | `playbooks/full_feature.md` |
+| Fix a bug | `playbooks/emergency_bugfix.md` |
+| Review code | `playbooks/code_review.md` |
+| Release | `playbooks/release_process.md` |
+
+## Rules Priority
+
+1. User instructions
+2. Agents.md
+3. rules/*
+4. playbooks/*
+5. templates/*
+6. prompts/*
+7. Project conventions
+
+Do NOT modify rules, playbooks, templates, or prompts files unless explicitly asked.
