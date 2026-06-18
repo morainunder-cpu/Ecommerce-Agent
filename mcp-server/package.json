@@ -1,0 +1,38 @@
+{
+  "name": "ecommerce-agent-mcp",
+  "version": "0.6.2",
+  "description": "MCP Server for ecommerce content generation — Shopify, Imagen, PPTX, HTML, social media. 23 AI skills, 8 agents, ready-to-run.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "ecommerce-agent-mcp": "./index.js"
+  },
+  "keywords": [
+    "mcp",
+    "ecommerce",
+    "shopify",
+    "imagen",
+    "product-image",
+    "catalog",
+    "ai-agent",
+    "cursor",
+    "claude-code",
+    "codex"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USER/ecommerce-agent"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js --self-test"
+  },
+  "files": [
+    "index.js",
+    "skills/",
+    "skills-index.json",
+    "README.md",
+    "LICENSE"
+  ]
+}

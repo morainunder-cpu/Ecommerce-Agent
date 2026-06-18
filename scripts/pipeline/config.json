@@ -1,0 +1,127 @@
+{
+  "name": "Ecommerce-Agent Pipeline v2.0",
+  "version": "0.6.2",
+  "stages": {
+    "production-4": {
+      "name": "Production Pipeline (4步)",
+      "description": "Product → Prompt → Image → Catalog",
+      "steps": [
+        {
+          "id": "p1",
+          "phase": 2,
+          "name": "产品分析",
+          "skill": "product-analyzer",
+          "input_from": "task",
+          "output_key": "product_spec"
+        },
+        {
+          "id": "p2",
+          "phase": 3,
+          "name": "生成Prompt",
+          "skill": "image-prompt-generator",
+          "input_from": "product_spec",
+          "output_key": "prompt"
+        },
+        {
+          "id": "p3",
+          "phase": 5,
+          "name": "生成图片",
+          "skill": "image-generator",
+          "input_from": "prompt",
+          "output_key": "image_path"
+        },
+        {
+          "id": "p4",
+          "phase": 7,
+          "name": "生成PPTX",
+          "skill": "catalog-generator",
+          "input_from": "prompt",
+          "output_key": "pptx_path"
+        }
+      ]
+    },
+    "review-6": {
+      "name": "Review Pipeline (6步)",
+      "description": "Prompt Review → Image QA → Listing Review → Code Review → Translation → Reflection",
+      "steps": [
+        {
+          "id": "r1",
+          "phase": 4,
+          "name": "审查Prompt",
+          "skill": "prompt-review",
+          "input_from": "prompt",
+          "output_key": "prompt_review"
+        },
+        {
+          "id": "r2",
+          "phase": 6,
+          "name": "图片质检",
+          "skill": "image-quality-review",
+          "input_from": "image_path",
+          "output_key": "image_qa"
+        },
+        {
+          "id": "r3",
+          "phase": 8,
+          "name": "目录审查",
+          "skill": "listing-review",
+          "input_from": "pptx_path",
+          "output_key": "listing_review"
+        },
+        {
+          "id": "r4",
+          "phase": 8,
+          "name": "代码审查",
+          "skill": "code-review",
+          "input_from": "catalog_path",
+          "output_key": "code_review"
+        },
+        {
+          "id": "r5",
+          "name": "翻译质检",
+          "skill": "translation-qa",
+          "input_from": "prompt",
+          "output_key": "translation_qa",
+          "optional": true
+        },
+        {
+          "id": "r6",
+          "name": "反思自检",
+          "skill": "reflection",
+          "input_from": "all_outputs",
+          "output_key": "reflection_report"
+        }
+      ]
+    },
+    "operations-3": {
+      "name": "Operations Pipeline (3步)",
+      "description": "SEO + Security + Analytics",
+      "steps": [
+        {
+          "id": "o1",
+          "phase": 10,
+          "name": "SEO审计",
+          "skill": "seo-checklist",
+          "input_from": "store_url",
+          "output_key": "seo_report"
+        },
+        {
+          "id": "o2",
+          "phase": 10,
+          "name": "安全检查",
+          "skill": "security-checklist",
+          "input_from": "codebase",
+          "output_key": "security_report"
+        },
+        {
+          "id": "o3",
+          "phase": 10,
+          "name": "运营分析",
+          "skill": "ecommerce-analysis",
+          "input_from": "all_outputs",
+          "output_key": "ops_report"
+        }
+      ]
+    }
+  }
+}

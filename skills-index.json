@@ -1,0 +1,259 @@
+{
+  "version": "0.6.2",
+  "skills_count": 23,
+  "skills": [
+    {
+      "name": "architecture-review",
+      "description": "审查电商多平台流水线的架构一致性。检查 Shopify(hpdun.com) + Facebook(HPD) + TikTok(@hpdun3) 三平台之间的数据流、内容策略、品牌一致性。",
+      "tools": "Read, Bash",
+      "duty": "审查 Shopify + Facebook + TikTok 三平台流水线的架构一致性和数据流完整性。\n\n## 架构概览\n\n```\n产品数据（Product Spec）\n    │\n    ├── Shopify (hpdun.com)\n    │     ├── 产品页 → SEO Checklist\n    │     ├── 类目页 → Mobile UX Checklist\n    │  ",
+      "input": "",
+      "output": "```json\n{\n  \"verdict\": \"consistent|partial_gaps|needs_restructure\",\n  \"dataConsistency\": {\"score\": 90, \"gaps\": []},\n  \"brandConsistency\": {\"score\": 85, \"gaps\": [\"FB 文案调性偏口语, Shopify 偏正式\"]},\n  \"dataFlo",
+      "trigger": "",
+      "checklist_count": 19,
+      "refs_files": []
+    },
+    {
+      "name": "catalog-generator",
+      "description": "根据审查通过的 Prompt 和产品数据生成 PPTX 商品目录。使用 Input/图册模板.pptx 作为模板。用于 multi-agent 流水线的 Phase 5。",
+      "tools": "Read, Write, Bash",
+      "duty": "将审查通过的 Prompt 和产品数据填充到 PPTX 模板中，生成标准化的商品目录幻灯片。",
+      "input": "- 审查通过的 Prompt（来自 content_reviewer）\n- 产品图片（如已有）\n- 模板文件：Input/图册模板.pptx",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 5,
+      "refs_files": []
+    },
+    {
+      "name": "code-review",
+      "description": "审查 catalog/ 目录下的 HTML/JS/server.js 代码质量。检查编码规范、安全漏洞、性能问题、可维护性。用于 catalog 更新后的代码审查。",
+      "tools": "Read, Bash",
+      "duty": "对 catalog/ 目录的代码进行系统审查，确保代码质量符合 rules/coding.md 规范。",
+      "input": "",
+      "output": "```json\n{\n  \"verdict\": \"pass|needs-fix|reject\",\n  \"complianceScore\": 85,\n  \"findings\": [\n    {\"category\": \"coding_standard\", \"severity\": \"minor\", \"location\": \"index.html:42\", \"issue\": \"使用了行内样式\", \"fix\"",
+      "trigger": "",
+      "checklist_count": 24,
+      "refs_files": []
+    },
+    {
+      "name": "competitor-analysis",
+      "description": "分析竞品产品信息，提取差异化卖点、定价策略、展示方式。用于产品上线前的市场定位参考，或当用户提供竞品链接/描述时激活。",
+      "tools": "Read, Write, Bash",
+      "duty": "分析竞品产品的展示策略和卖点，为自身产品 Prompt 生成和目录制作提供差异化参考。",
+      "input": "- 竞品产品名称 + 描述（自由文本或链接）\n- 自身产品 Product Spec（来自 product-analyzer）\n- 分析目标（如：差异化卖点、定价参考、展示方式）",
+      "output": "```\n竞品分析报告\n\n竞品：[名称]\n来源：[链接/描述]\n\n展示策略对比：\n  图片类型：[竞品] vs [自身]\n  重点部位：[竞品] vs [自身]\n  拍摄风格：[竞品] vs [自身]\n\n竞品核心卖点：\n  1. [卖点]\n  2. [卖点]\n\n差异化建议：\n  强化：[自身独有优势]\n  考虑补充：[竞品有自身无]\n  差异化措辞：[共有点的差异化方向]\n\n定价参考：\n  竞品价格",
+      "trigger": "",
+      "checklist_count": 5,
+      "refs_files": []
+    },
+    {
+      "name": "content-calendar",
+      "description": "Facebook HPD + TikTok @hpdun3 双平台内容排期。根据产品上线节奏生成月度/周度发布计划，协调产品和社媒内容。",
+      "tools": "Read, Write",
+      "duty": "为 Facebook HPD 和 TikTok @hpdun3 生成协调的内容发布计划，确保两个平台的内容节奏一致且互补。",
+      "input": "",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 0,
+      "refs_files": []
+    },
+    {
+      "name": "context-compress",
+      "description": "多产品批量处理时的上下文压缩策略。防止上下文溢出，确保流水线在处理大量产品时稳定运行。",
+      "tools": "Read, Write",
+      "duty": "在多产品批量处理场景下管理上下文窗口，避免 Token 溢出导致流水线中断。",
+      "input": "",
+      "output": "",
+      "trigger": "- 单次处理 3 个以上产品\n- 上下文使用率接近阈值\n- 流水线中断后恢复",
+      "checklist_count": 3,
+      "refs_files": []
+    },
+    {
+      "name": "debug-checklist",
+      "description": "电商流水线故障排查清单。覆盖 Prompt 生成失败、PPTX 填充错误、HTML 布局偏移、Shopify 同步问题、社媒发布失败的排查步骤。",
+      "tools": "Read, Bash",
+      "duty": "当流水线任何阶段出现故障时，按场景快速定位问题并提供修复方案。\n\n## 故障场景 → 排查步骤\n\n### 场景 1：Prompt 被 review 连续驳回 3 次\n\n1. [ ] 检查原始 Product Spec 展示部位是否准确\n2. [ ] 检查 ProductRule.md 约束是否被正确读取\n3. [ ] 对比 GemPrompt.md 示例格式\n4. [ ] 确认驳回原因是否聚焦（非",
+      "input": "",
+      "output": "```json\n{\n  \"phase\": \"Phase 5\",\n  \"symptom\": \"PPTX 生成失败\",\n  \"rootCause\": \"模板文件被 PowerPoint 占用\",\n  \"fix\": \"关闭 PowerPoint → 重试 catalog-generator\",\n  \"canResume\": true\n}\n```",
+      "trigger": "",
+      "checklist_count": 0,
+      "refs_files": []
+    },
+    {
+      "name": "ecommerce-analysis",
+      "description": "Shopify 店铺 hpdun.com 运营分析 + Facebook/TikTok 社媒引流效果分析。综合评估电商运营全貌，输出改进建议。",
+      "tools": "Read, Bash",
+      "duty": "综合分析 hpdun.com 店铺运营数据和社媒引流效果，提供可操作的优化建议。",
+      "input": "",
+      "output": "```json\n{\n  \"period\": \"2026-06\",\n  \"shopify\": {\n    \"productCount\": 45,\n    \"avgDescriptionLength\": 320,\n    \"issues\": [\"5 个产品描述不足 200 字\"]\n  },\n  \"traffic\": {\n    \"organicShare\": \"35%\",\n    \"socialSha",
+      "trigger": "",
+      "checklist_count": 23,
+      "refs_files": []
+    },
+    {
+      "name": "html-generator",
+      "description": "根据 PPTX 商品目录数据生成可交互的 HTML 商品展示页面。用于 multi-agent 流水线的 Phase 7。",
+      "tools": "Read, Write, Bash",
+      "duty": "从 PPTX 目录数据构建可在浏览器预览的 HTML 商品目录页面，支持目录导航和图片预览。",
+      "input": "- PPTX 目录文件路径\n- 产品数据（名称、图片、规格、Prompt）\n\n## 设计规范\n- 遵循 rules/coding.md 中 HTML/CSS 规则\n- 语义化标签，样式分离\n- 2 空格缩进，kebab-case 命名\n- 响应式布局，支持桌面和移动端",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 5,
+      "refs_files": []
+    },
+    {
+      "name": "image-generator",
+      "description": "通过 Google Vertex AI Imagen 批量生成商品四宫格图。替代 Gem CLI 方案。",
+      "tools": "Bash, Read, Write",
+      "duty": "将已通过审查的 Gem Image Prompt 批量发送到 Vertex AI Imagen，生成商品图片存入 Output/。",
+      "input": "",
+      "output": "- Output/{product}_四宫格.png\n- Output/_generation_log.json\n\n## 质量标准\n- [ ] gcloud 认证有效\n- [ ] Vertex AI API 已启用\n- [ ] 图片比例 463:278 / 4K 画质\n- [ ] 文件正确保存",
+      "trigger": "",
+      "checklist_count": 4,
+      "refs_files": []
+    },
+    {
+      "name": "image-prompt-generator",
+      "description": "根据 Product Spec 生成适用于 Gem Image 的中文四宫格细节图 Prompt。用于 multi-agent 流水线的 Phase 3。",
+      "tools": "Read, Write",
+      "duty": "将 Product Spec 转化为高质量的中文 Gem Image Prompt，确保生成的商品图 100% 匹配产品描述。",
+      "input": "- Product Spec（来自 product-analyzer）\n- 产品约束规则（ProductRule.md）",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 4,
+      "refs_files": []
+    },
+    {
+      "name": "image-quality-review",
+      "description": "审查生成的商品图片质量，包括分辨率、构图、光线、产品一致性。触发时机：PPTX 生成完成后、listing-review 之前（Phase 5b）。",
+      "tools": "Read, Bash",
+      "duty": "对已嵌入 PPTX 的商品图进行独立视觉质量审查，确保图片可用于电商展示。",
+      "input": "- PPTX 文件中嵌入的商品图片\n- 对应的 Product Spec（用于产品一致性比对）",
+      "output": "```json\n{\n  \"verdict\": \"pass|fix|reject\",\n  \"issues\": [\n    {\"dimension\": \"resolution\", \"problem\": \"...\", \"suggestion\": \"...\"}\n  ],\n  \"score\": 85\n}\n```",
+      "trigger": "> 在 catalog-generator 完成 PPTX 输出后、listing-review 执行前触发。\n> 属于 Phase 5b，作为从「生成」到「审查」之间的质检关卡。",
+      "checklist_count": 0,
+      "refs_files": []
+    },
+    {
+      "name": "listing-review",
+      "description": "审查最终商品目录条目的完整性，包括图片、文案、规格是否齐全，布局是否正确。在 catalog 生成完成后执行。",
+      "tools": "Read, Bash",
+      "duty": "对最终商品目录（PPTX + HTML）进行完整性审查，确保每件商品的展示信息齐全且正确。",
+      "input": "",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 10,
+      "refs_files": []
+    },
+    {
+      "name": "mobile-ux-checklist",
+      "description": "Shopify 店铺 hpdun.com + catalog HTML 在移动端的用户体验检查清单。覆盖响应式布局、触控交互、加载速度、可读性。",
+      "tools": "Read, Bash",
+      "duty": "确保 hpdun.com 和商品目录 HTML 在移动端（iOS/Android）提供流畅的购物体验。",
+      "input": "",
+      "output": "```json\n{\n  \"overallScore\": 88,\n  \"criticalIssues\": [],\n  \"improvements\": [\n    {\"page\": \"产品页\", \"issue\": \"变体选择器过小\", \"fix\": \"增大至 44px 高度\"}\n  ]\n}\n```",
+      "trigger": "",
+      "checklist_count": 22,
+      "refs_files": []
+    },
+    {
+      "name": "product-analyzer",
+      "description": "从原始产品描述中提取结构化需求，输出标准 Product Spec。用于 multi-agent 流水线的 Phase 2。",
+      "tools": "Read, Write",
+      "duty": "将用户的自由文本产品描述转换为结构化的 Product Spec，供下游 prompt_engineer 使用。",
+      "input": "- 产品名称\n- 产品描述（自由文本：材质、颜色、部位、规格、用途）\n- 约束条件（如有）",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 4,
+      "refs_files": []
+    },
+    {
+      "name": "prompt-refactor",
+      "description": "当 Prompt 被 review 驳回后，系统化改进 Prompt。根据驳回原因分类制定修改策略。",
+      "tools": "Read, Write",
+      "duty": "接收驳回的 Prompt 及驳回原因，分类处理并生成改进版 Prompt。\n\n## 驳回原因  改进策略\n\n| 驳回原因 | 改进策略 |\n|---------|---------|\n| 产品不一致 | 对照 Product Spec 逐部位核对，修正偏离描述 |\n| 违规元素 | 从 Prompt 中删除违规词，强化禁止声明 |\n| 颜色/布料变更 | 核对原始描述中的颜色和材质，修正 Prom",
+      "input": "",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 0,
+      "refs_files": []
+    },
+    {
+      "name": "prompt-review",
+      "description": "审查生成的 Gem Image Prompt 质量，检查产品一致性、合规性、格式完整性。用于 multi-agent 流水线的 Phase 4。",
+      "tools": "Read",
+      "duty": "独立审查 prompt_engineer 生成的 Prompt，确保其 100% 符合 ProductRule.md 约束和格式规范。",
+      "input": "",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 12,
+      "refs_files": []
+    },
+    {
+      "name": "reflection",
+      "description": "电商内容反思与自检。每 Phase 完成后自动反思输出质量，减少下游驳回率。非代码反思，专注内容精准度和合规性。",
+      "tools": "Read, Write",
+      "duty": "在每个关键 Phase 完成后进行元认知反思，检查输出是否达到质量标准，发现潜在问题并自查修正，减少下游驳回。",
+      "input": "",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 0,
+      "refs_files": []
+    },
+    {
+      "name": "security-checklist",
+      "description": "Shopify 店铺 hpdun.com + catalog/server.js 安全检查清单。覆盖认证、数据保护、文件权限、敏感信息泄露、支付安全。",
+      "tools": "Read, Bash",
+      "duty": "对 Shopify 店铺和本地 catalog 服务进行安全审查，防止数据泄露和攻击。",
+      "input": "",
+      "output": "```json\n{\n  \"overallRisk\": \"low|medium|high|critical\",\n  \"findings\": [\n    {\"severity\": \"high\", \"location\": \"catalog/server.js:12\", \"issue\": \"目录遍历可能\", \"fix\": \"添加路径校验\"}\n  ],\n  \"checkedAreas\": [\"env\", \"",
+      "trigger": "",
+      "checklist_count": 19,
+      "refs_files": []
+    },
+    {
+      "name": "seo-checklist",
+      "description": "Shopify 店铺 hpdun.com 的 SEO 优化检查清单。覆盖 meta 标签、结构化数据、URL 结构、图片优化、加载速度。用于店铺上线前或内容更新后的 SEO 审计。",
+      "tools": "Read, Bash",
+      "duty": "对 hpdun.com 进行系统化 SEO 审计，确保店铺在搜索引擎中的可见性和排名。",
+      "input": "",
+      "output": "```json\n{\n  \"overallScore\": 85,\n  \"sections\": {\n    \"meta\": {\"score\": 90, \"issues\": []},\n    \"structuredData\": {\"score\": 70, \"issues\": [\"缺少 Organization schema\"]},\n    \"urls\": {\"score\": 80, \"issues\": ",
+      "trigger": "",
+      "checklist_count": 25,
+      "refs_files": []
+    },
+    {
+      "name": "social-copywriter",
+      "description": "根据产品规格生成社交媒体文案，支持抖音短视频脚本和视频文案。利用项目已有的脚本文库风格。",
+      "tools": "Read, Write",
+      "duty": "将产品数据转化为适用于抖音等社交平台的短视频脚本和营销文案。",
+      "input": "- Product Spec（来自 product-analyzer）\n- 目标平台：抖音 / 微信视频号 / 小红书\n\n## 文案类型\n\n### 抖音短视频脚本\n时长：15-30 秒\n结构：\n  0-3秒   钩子（产品亮点一句话抓住注意力）\n  3-15秒  展示（四宫格细节逐一展示）\n  15-25秒 卖点（材质、功能、使用场景）\n  25-30秒 行动号召（引导购买/关注）\n\n### 视频",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 4,
+      "refs_files": []
+    },
+    {
+      "name": "translation-qa",
+      "description": "电商内容中英翻译质量审查。检查 Shopify(hpdun.com) + Facebook(HPD) 英文产品描述、Prompt 翻译、社媒文案的准确性、语气一致性、产品术语规范。",
+      "tools": "Read, Write",
+      "duty": "对从中文 Product Spec / Prompt / 社媒文案翻译为英文的内容进行质量审查，确保面向海外客户的英文内容准确且专业。",
+      "input": "",
+      "output": "",
+      "trigger": "",
+      "checklist_count": 15,
+      "refs_files": []
+    },
+    {
+      "name": "workflow-optimize",
+      "description": "监控 8 Phase 电商流水线运行效率，自动检测瓶颈、重复劳动、可并行化机会，输出优化建议。",
+      "tools": "Read, Bash",
+      "duty": "分析多 Phase 流水线的运行效率，识别瓶颈并提供具体优化方案。",
+      "input": "",
+      "output": "",
+      "trigger": "- 流水线启动时（Phase 1 前）→ 预检查\n- 流水线结束后（Phase 8 后）→ 总结优化\n- 用户手动触发：「优化流水线」",
+      "checklist_count": 10,
+      "refs_files": []
+    }
+  ]
+}

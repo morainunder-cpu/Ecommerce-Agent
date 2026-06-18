@@ -1,4 +1,4 @@
-# AI Development OS
+﻿# AI Development OS
 
 ## Mission
 
@@ -69,43 +69,89 @@ Ask instead of guessing.
 # Project Architecture
 
 ```
-Ecommerce-Agent/
-├── Agents.md                    # Entry point (this file)
-├── README.md                    # Project overview
-├── .gitignore                   # File exclusion rules
-├── .pre-commit-config.yaml       # Pre-commit validation hooks
-├── .env.example                 # Environment variable template
-├── config/                      # YAML configuration system
-│   ├── agents.yaml               # Structured role definitions
-│   ├── tasks.yaml                # Task workflow definitions
-│   └── rules.yaml                # Rule index and priorities
-├── .cursor/rules/               # AI tool auto-loading rules
-│   ├── project-overview.mdc      # Entry overview for AI
-│   ├── ecommerce.mdc             # E-commerce specific rules
-│   └── coding.mdc                # Coding standards for AI
-├── .github/workflows/           # CI/CD automation
-│   └── ci.yml                    # Markdown lint + file check + YAML validate
-├── rules/                      # AI behavior rules (11 files)
-├── playbooks/                  # Standard operating procedures
-│   ├── _base.md                  # Shared template structure
-│   ├── code_review.md             # Code review process
-│   ├── emergency_bugfix.md        # Emergency bug fix process
-│   ├── full_feature.md            # Feature development process
-│   ├── project_onboarding.md      # Project onboarding process
-│   ├── release_process.md         # Release process
-│   └── checklists/               # Specialized checklists (5 files)
-├── templates/                  # Output templates (8 files)
-├── prompts/                    # Prompt templates (4 files)
-├── knowledge/                  # Project knowledge base
-│   ├── architecture_notes.md      # Architecture documentation
-│   ├── conventions.md             # Development conventions
-│   ├── glossary.md                # Terminology (human-readable)
-│   └── glossary.yaml              # Terminology (machine-readable)
-├── Examples/                    # Real-world usage examples (3 files)
-└── catalog/                    # HTML product catalog
-    ├── index.html
-    └── server.js
+Ecommerce-Agent/                           — v0.6.2, 23 skills, 8 agents
+├── skills/                                — 23 agent skill definitions
+│   ├── product-analyzer/                  — Phase 2: product analysis
+│   ├── image-prompt-generator/            — Phase 3: prompt generation
+│   ├── image-generator/                   — Phase 5: Imagen image generation
+│   ├── catalog-generator/                 — Phase 7: PPTX catalog
+│   ├── html-generator/                    — Phase 9: HTML catalog
+│   ├── prompt-review/                     — Phase 4: prompt review
+│   ├── prompt-refactor/                   — Phase 3-reject: prompt fix
+│   ├── image-quality-review/              — Phase 6: visual QA
+│   ├── listing-review/                    — Phase 8: catalog review
+│   ├── code-review/                       — Phase 8: code review
+│   ├── translation-qa/                    — Translation quality
+│   ├── reflection/                        — Meta self-check per phase
+│   ├── competitor-analysis/               — Phase 1: competitor analysis
+│   ├── ecommerce-analysis/                — Phase 10: operations analysis
+│   ├── seo-checklist/                     — Shopify SEO audit
+│   ├── security-checklist/                — Security audit
+│   ├── mobile-ux-checklist/               — Mobile UX check
+│   ├── content-calendar/                  — Social media scheduling
+│   ├── architecture-review/               — Cross-platform architecture
+│   ├── debug-checklist/                   — Pipeline troubleshooting
+│   ├── context-compress/                  — Batch context management
+│   ├── workflow-optimize/                 — Pipeline optimization
+│   └── social-copywriter/                 — Facebook/TikTok copy
+├── config/
+│   ├── agents.yaml                        — 8 agent definitions
+│   ├── pipeline.yaml                      — 10-stage pipeline (v2.0)
+│   ├── tasks.yaml                         — Task definitions (v2.0)
+│   └── rules.yaml                         — Skill index + priorities
+├── scripts/
+│   ├── generate_images.py                 — Imagen batch generation
+│   └── pipeline/                          — Pipeline executor
+│       ├── config.json                    — Pipeline config
+│       ├── runner.js                      — Pipeline runner (node_repl)
+│       └── stage-executor.js              — Stage execution engine
+├── mcp-server/                            — Community MCP Server (npm)
+│   ├── package.json                       — npm package definition
+│   ├── index.js                           — 5 community tools
+│   └── skills/                            — Skill copies for distribution
+├── catalog/                               — HTML preview
+│   ├── index.html
+│   └── server.js
+├── playbooks/
+│   ├── _base.md                           — Shared template structure
+│   ├── multi_agent_collaboration.md        — Full execution guide
+│   └── checklists/                        — Specialized checklists
+├── rules/                                 — 11 AI behavior rules
+├── templates/                             — 8 output templates
+├── prompts/                               — 4 prompt templates
+├── knowledge/                             — Project knowledge base
+│   ├── architecture_notes.md
+│   ├── conventions.md
+│   ├── glossary.md                        — Terminology (human)
+│   └── glossary.yaml                      — Terminology (machine)
+├── .cursor/rules/                         — AI tool auto-loading
+│   ├── multi-agent.mdc                    — Multi-agent entry
+│   ├── project-overview.mdc
+│   ├── ecommerce.mdc
+│   └── coding.mdc
+├── .github/workflows/
+│   └── ci.yml                             — CI/CD automation
+├── Input/                                 — PPTX template + batch JSON
+├── Output/                                — Generated PPTX + PNG
+├── Agents.md                              — Entry point (this file)
+├── README.md                              — Project overview
+├── COLLABORATION.md                       — Human-readable pipeline
+├── CHANGELOG.md                           — v0.1 → v0.6.2 history
+├── skills-index.json                      — 23-skill machine-readable index
+└── .env.example                           — Environment template
 ```
+
+---
+
+# Platforms
+
+This project serves three platforms:
+
+| Platform | Account | Skill Coverage |
+|----------|---------|---------------|
+| Shopify | hpdun.com | seo-checklist, security-checklist, mobile-ux-checklist, ecommerce-analysis |
+| Facebook | HPD | social-copywriter, content-calendar, ecommerce-analysis, translation-qa |
+| TikTok | @hpdun3 | social-copywriter, content-calendar, image-quality-review |
 
 ---
 
@@ -233,36 +279,77 @@ Never claim success without verification.
 
 When appropriate, follow specialized documents:
 
-Feature Development
-→ playbooks/full_feature.md
+## Core Pipeline (v2.0, 10 phases)
 
-Emergency Bug Fix
-→ playbooks/emergency_bugfix.md
-
-Code Review
-→ playbooks/code_review.md
-
-Release
-→ playbooks/release_process.md
-
-Project Onboarding
-→ playbooks/project_onboarding.md
-
-Project Summary
-→ rules/summary.md
-
-Debug
-→ rules/debug.md
-
-Output Format
-→ rules/output.md
-
-Shared structure for all playbooks
-→ playbooks/_base.md
-
-Multi-Agent Collaboration
+Multi-Agent Content Pipeline
 → playbooks/multi_agent_collaboration.md
 
+## Skill Execution
+
+Each agent invokes skills from skills/ directory:
+- workflow_orchestrator → 8 skills (context-compress, competitor-analysis, architecture-review, debug-checklist, ecommerce-analysis, seo-checklist, security-checklist, workflow-optimize)
+- product_analyst → 1 skill (product-analyzer)
+- prompt_engineer → 3 skills (image-prompt-generator, prompt-refactor, image-generator)
+- content_reviewer → 6 skills (prompt-review, image-quality-review, listing-review, code-review, translation-qa, reflection)
+- catalog_generator → 1 skill (catalog-generator)
+- html_catalog_generator → 2 skills (html-generator, mobile-ux-checklist)
+- social_copywriter → 2 skills (social-copywriter, content-calendar)
+
+## Pipeline Executor
+
+→ scripts/pipeline/runner.js  (node_repl loaded)
+→ scripts/pipeline/stage-executor.js
+
+## MCP Server (Community Distribution)
+
+→ mcp-server/index.js  (5 community tools)
+→ mcp-server/package.json
+
+## Feature Development
+
+→ playbooks/full_feature.md
+
+## Emergency Bug Fix
+
+→ playbooks/emergency_bugfix.md
+
+## Code Review
+
+→ playbooks/code_review.md
+
+## Release
+
+→ playbooks/release_process.md
+
+## Project Onboarding
+
+→ playbooks/project_onboarding.md
+
+## Project Summary
+
+→ rules/summary.md
+
+## Debug
+
+→ rules/debug.md
+
+## Output Format
+
+→ rules/output.md
+
+## Shared structure for all playbooks
+
+→ playbooks/_base.md
+
+## Multi-Agent Collaboration
+
+→ playbooks/multi_agent_collaboration.md
+
+## Skill Reference
+
+→ skills/  (23 SKILL.md files)
+→ skills-index.json  (machine-readable index)
+→ config/rules.yaml  (skills_index)
 
 ---
 

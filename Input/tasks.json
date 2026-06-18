@@ -1,0 +1,37 @@
+{
+  "name": "舒特工贸 2026年6月 产品上线任务",
+  "created": "2026-06-18",
+  "store_url": "https://hpdun.com",
+  "tasks": [
+    {
+      "id": "task-001",
+      "product": "防静电工作服（春秋款）",
+      "description": "防静电涤棉混纺（含导电纤维），藏青/灰色可选，S-5XL，适用于石油化工、电子车间、粉尘环境。",
+      "target_platforms": [
+        "shopify",
+        "facebook",
+        "tiktok"
+      ],
+      "priority": "high"
+    },
+    {
+      "id": "task-002",
+      "product": "阻燃防护服（夏季款）",
+      "description": "芳纶阻燃面料（符合GB 8965.1-2020），橙色/藏青可选，M-4XL，适用于冶金、焊接、电力、消防。",
+      "target_platforms": [
+        "shopify",
+        "facebook"
+      ],
+      "priority": "high"
+    },
+    {
+      "id": "task-003",
+      "product": "耐酸碱化学品防护服",
+      "description": "耐酸碱PVC/橡胶涂层面料，黄色/军绿，M-3XL，适用于化工厂、电镀、实验室。",
+      "target_platforms": [
+        "shopify"
+      ],
+      "priority": "medium"
+    }
+  ]
+}
