@@ -1,35 +1,51 @@
 ---
-description: Ecommerce-Agent project overview and entry point
-globs: *
+description: Ecommerce-Agent v0.6.2 project overview — 8 agents, 23 skills, Shopify+Facebook+TikTok
+globs: **/*
 alwaysApply: true
 ---
 
-# Ecommerce-Agent
+# Ecommerce-Agent v0.6.2
 
-This is an AI agent operating system for e-commerce scenarios.
+Multi-agent e-commerce content generation pipeline for 舒特工贸.
 
-## Entry Point
+## What this project does
 
-Start by reading `Agents.md` for the complete AI behavior instructions.
+Transforms product descriptions into:
+- 4-grid Gem Image / Imagen Prompts (463:278, 4K)
+- AI-generated product images (Vertex AI Imagen)
+- PPTX product catalogs
+- Interactive HTML catalogs
+- Social media copy (Facebook HPD + TikTok @hpdun3)
+- Shopify store content (hpdun.com)
 
-## Quick Reference
+## Architecture
 
-| Action | Reference |
-|--------|----------|
-| Understand the project | `playbooks/project_onboarding.md` |
-| Develop a feature | `playbooks/full_feature.md` |
-| Fix a bug | `playbooks/emergency_bugfix.md` |
-| Review code | `playbooks/code_review.md` |
-| Release | `playbooks/release_process.md` |
+```
+skills/ (23 skills)
+  ├── production/ (5): product-analyzer, image-prompt-generator, image-generator, catalog-generator, html-generator
+  ├── review/ (7): prompt-review, prompt-refactor, image-quality-review, listing-review, code-review, translation-qa, reflection
+  ├── operations/ (8): competitor-analysis, ecommerce-analysis, seo-checklist, security-checklist, mobile-ux-checklist, content-calendar, architecture-review, debug-checklist
+  ├── orchestration/ (2): context-compress, workflow-optimize
+  └── social/ (1): social-copywriter
 
-## Rules Priority
+config/
+  agents.yaml    — 8 agent definitions with skill bindings
+  pipeline.yaml  — 10-stage pipeline (v2.0)
+  tasks.yaml     — task definitions (v2.0)
+  rules.yaml     — rule + skill index
 
-1. User instructions
-2. Agents.md
-3. rules/*
-4. playbooks/*
-5. templates/*
-6. prompts/*
-7. Project conventions
+playbooks/
+  multi_agent_collaboration.md — 10-phase execution playbook (v2.0)
 
-Do NOT modify rules, playbooks, templates, or prompts files unless explicitly asked.
+scripts/
+  generate_images.py — Vertex AI Imagen batch generation
+```
+
+## Key files for AI
+
+- `Agents.md` — AI development OS (entry point)
+- `.cursor/rules/multi-agent.mdc` — Multi-agent pipeline entry
+- `.cursor/rules/ecommerce.mdc` — E-commerce specific rules
+- `.cursor/rules/coding.mdc` — Coding standards
+- `ProductRule.md` — Product constraint rules
+- `GemPrompt.md` — Prompt example

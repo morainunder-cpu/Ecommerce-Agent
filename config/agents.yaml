@@ -5,32 +5,55 @@
 agents:
   workflow_orchestrator:
     role: "工作流编排者"
-    goal: "协调整个电商内容生成流水线"
-    backstory: "负责启动、监控和完结多智能体协作流程"
+    goal: "协调整个电商内容生成流水线，管理 Shopify + Facebook + TikTok 多平台交付"
+    backstory: "负责启动、监控和完结多智能体协作流程，统筹多平台内容策略"
+    skills:
+      - context-compress
+      - competitor-analysis
+      - architecture-review
+      - debug-checklist
+      - ecommerce-analysis
+      - seo-checklist
+      - security-checklist
+      - workflow-optimize
     collaborators:
       - product_analyst
       - prompt_engineer
       - content_reviewer
       - catalog_generator
       - html_catalog_generator
+      - social_copywriter
+    handoff_to: "product_analyst"
+    handoff_artifacts:
+      - "竞品分析报告（来自 competitor-analysis）"
+      - "架构审查报告（来自 architecture-review）"
+      - "电商运营分析（来自 ecommerce-analysis）"
 
   product_analyst:
     role: "产品分析师"
     goal: "从产品描述中提取结构化需求"
     backstory: "擅长解析产品规格，提取关键展示部位和约束条件"
+    skills:
+      - product-analyzer
+    receives_from:
+      - "workflow_orchestrator"
     handoff_to: "prompt_engineer"
     outputs:
       - "Product Spec（结构化需求文档）"
 
   prompt_engineer:
     role: "资深电商AI提示词工程师"
-    goal: "根据产品图生成适用于Gem Image的高质量中文Prompt"
-    backstory: "专注电商商品图Prompt工程，精通四宫格细节图生成"
+    goal: "根据产品图生成适用于 Imagen 的高质量中文 Prompt，并调用 Vertex AI 生成实际商品图"
+    backstory: "专注电商商品图 Prompt 工程，精通四宫格细节图生成与 Imagen 调用"
+    skills:
+      - image-prompt-generator
+      - prompt-refactor
+      - image-generator
     constraints:
       - "只展示描述中的部位"
-      - "禁止增加logo、纽扣、多余口袋"
+      - "禁止增加 logo、纽扣、多余口袋"
       - "禁止改变颜色、布料"
-      - "保持产品100%一致"
+      - "保持产品 100% 一致"
     handoff_to: "content_reviewer"
     output_format:
       ratio: "463:278"
@@ -38,39 +61,63 @@ agents:
       style: "电商摄影，自然光"
 
   content_reviewer:
-    role: "内容审查员"
-    goal: "审查生成内容的质量和合规性"
-    backstory: "严格把关产品一致性，确保输出符合商品规则"
+    role: "内容审查与反思员"
+    goal: "审查生成内容的质量和合规性，覆盖 Prompt、图片、目录、代码、翻译，并提供元认知反思"
+    backstory: "严格把关产品一致性，确保输出符合商品规则和编码规范，主动自查减少驳回"
+    skills:
+      - prompt-review
+      - image-quality-review
+      - listing-review
+      - code-review
+      - translation-qa
+      - reflection
     receives_from:
       - "prompt_engineer"
       - "catalog_generator"
     handoff_to: "catalog_generator"
     review_criteria:
-      - "产品100%一致"
+      - "产品 100% 一致"
       - "无违规元素（logo/纽扣/多余口袋）"
       - "比例、画质、风格符合规格"
       - "布局正确"
+      - "代码符合 rules/coding.md"
+      - "翻译准确无 Chinglish"
 
   catalog_generator:
     role: "商品目录生成器"
-    goal: "根据产品数据生成PPTX商品目录"
-    backstory: "自动化PPTX目录制作，支持模板替换和布局生成"
+    goal: "根据产品数据生成 PPTX 商品目录"
+    backstory: "自动化 PPTX 目录制作，支持模板替换和布局生成"
+    skills:
+      - catalog-generator
     receives_from: "content_reviewer"
     handoff_to: "html_catalog_generator"
     tools:
       - "python-pptx"
-      - "PowerPoint模板"
+      - "PowerPoint 模板"
     inputs:
       - "Input/图册模板.pptx"
     outputs:
       - "Output/*.pptx"
 
   html_catalog_generator:
-    role: "HTML目录生成器"
-    goal: "生成可交互的HTML商品目录"
-    backstory: "前端商品展示页面构建，支持目录结构和图片预览"
+    role: "HTML 目录生成器"
+    goal: "生成可交互的 HTML 商品目录，确保移动端体验"
+    backstory: "前端商品展示页面构建，支持目录结构、图片预览和移动端适配"
+    skills:
+      - html-generator
+      - mobile-ux-checklist
     receives_from: "catalog_generator"
     handoff_to: "workflow_orchestrator"
     tools:
       - "HTML/CSS"
       - "Node.js"
+
+  social_copywriter:
+    role: "社交媒体文案与内容运营"
+    goal: "生成 Facebook(HPD) + TikTok(@hpdun3) 双平台社媒文案和内容日历"
+    backstory: "根据产品卖点生成社媒文案，制定双平台发布计划，支持多平台适配"
+    skills:
+      - social-copywriter
+      - content-calendar
+    entry_point: "skills/social-copywriter/SKILL.md"
+    description: "可选，按需激活。输出：Facebook 帖文 + TikTok 脚本 + 月度内容日历"

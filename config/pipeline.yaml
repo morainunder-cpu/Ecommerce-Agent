@@ -1,0 +1,112 @@
+# Pipeline Topology
+# Machine-readable definition of the multi-agent collaboration pipeline
+# Designed for programmatic consumption
+
+pipeline:
+  name: "电商内容生成流水线"
+  version: "2.0"
+  trigger: "用户提交产品需求"
+  delivery: "Prompt + 商品图 PNG + PPTX + HTML + 运营分析 + 社媒文案"
+
+  agents:
+    - id: orchestrator
+      role: "workflow_orchestrator"
+      skills: [context-compress, competitor-analysis, architecture-review, debug-checklist, ecommerce-analysis, seo-checklist, security-checklist, workflow-optimize]
+    - id: analyst
+      role: "product_analyst"
+      skills: [product-analyzer]
+    - id: engineer
+      role: "prompt_engineer"
+      skills: [image-prompt-generator, prompt-refactor, image-generator]
+    - id: reviewer
+      role: "content_reviewer"
+      skills: [prompt-review, image-quality-review, listing-review, code-review, translation-qa, reflection]
+    - id: cataloger
+      role: "catalog_generator"
+      skills: [catalog-generator]
+    - id: html_cataloger
+      role: "html_catalog_generator"
+      skills: [html-generator, mobile-ux-checklist]
+    - id: copywriter
+      role: "social_copywriter"
+      skills: [social-copywriter, content-calendar]
+
+  stages:
+    - id: 1
+      name: "启动与竞品分析"
+      agent: "orchestrator"
+      input: "用户需求 + 竞品信息(可选)"
+      output: "竞品分析报告"
+      skills: [competitor-analysis]
+
+    - id: 2
+      name: "产品分析"
+      agent: "analyst"
+      input: "用户需求 + 竞品报告"
+      output: "Product Spec"
+      skills: [product-analyzer]
+
+    - id: 3
+      name: "生成Prompt"
+      agent: "engineer"
+      input: "Product Spec"
+      output: "Gem Image Prompt"
+      skills: [image-prompt-generator]
+
+    - id: 4
+      name: "审查Prompt"
+      agent: "reviewer"
+      input: "Gem Image Prompt"
+      output: "审查结果"
+      skills: [prompt-review, reflection]
+      on_reject:
+        back_to: 3
+        max_retries: 3
+        skill: prompt-refactor
+
+    - id: 5
+      name: "生成图片"
+      agent: "engineer"
+      input: "审查通过的Prompt"
+      output: "商品图 PNG"
+      skills: [image-generator]
+
+    - id: 6
+      name: "图片质检"
+      agent: "reviewer"
+      input: "商品图 PNG"
+      output: "质检结果"
+      skills: [image-quality-review]
+      on_reject:
+        back_to: 5
+
+    - id: 7
+      name: "生成PPTX"
+      agent: "cataloger"
+      input: "审查通过的Prompt + 商品图"
+      output: "PPTX目录"
+      skills: [catalog-generator]
+
+    - id: 8
+      name: "目录审查"
+      agent: "reviewer"
+      input: "PPTX目录"
+      output: "审查结果"
+      skills: [listing-review, code-review]
+      on_reject:
+        back_to: 7
+        max_retries: 3
+
+    - id: 9
+      name: "生成HTML"
+      agent: "html_cataloger"
+      input: "PPTX数据 + 商品图"
+      output: "HTML目录"
+      skills: [html-generator, mobile-ux-checklist]
+
+    - id: 10
+      name: "运营分析与交付"
+      agent: "orchestrator"
+      input: "全部交付物"
+      output: "最终报告 + SEO分析 + 安全分析 + 内容日历"
+      skills: [ecommerce-analysis, seo-checklist, security-checklist, architecture-review]

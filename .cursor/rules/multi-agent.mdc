@@ -1,0 +1,50 @@
+---
+description: Multi-agent collaboration entry for AI agents
+globs: **/*.md
+alwaysApply: true
+---
+
+# Multi-Agent Collaboration v2.0 — AI Entry
+
+This project has an 8-agent, 22-skill pipeline for e-commerce content generation.
+
+When the user asks to "start multi-agent collaboration", follow this:
+
+## Agents (8)
+
+1. **workflow_orchestrator** — pipeline control, competitor analysis, operations (8 skills)
+2. **product_analyst** — structured product requirements (1 skill)
+3. **prompt_engineer** — Prompt generation + Imagen image generation (3 skills)
+4. **content_reviewer** — review + reflection + translation QA (6 skills)
+5. **catalog_generator** — PPTX catalog generation (1 skill)
+6. **html_catalog_generator** — HTML catalog + mobile UX (2 skills)
+7. **social_copywriter** — social media copy + content calendar (2 skills, optional)
+
+## Skills (22)
+
+- Production: product-analyzer, image-prompt-generator, image-generator, catalog-generator, html-generator
+- Review: prompt-review, prompt-refactor, image-quality-review, listing-review, code-review, translation-qa, reflection
+- Operations: competitor-analysis, ecommerce-analysis, seo-checklist, security-checklist, mobile-ux-checklist, content-calendar, architecture-review, debug-checklist
+- Orchestration: context-compress, workflow-optimize
+- Social: social-copywriter
+
+## Platforms
+
+- Shopify: hpdun.com
+- TikTok: @hpdun3
+- Facebook: HPD
+
+## Execution
+
+Open `playbooks/multi_agent_collaboration.md` and execute Phase 1—10 sequentially.
+
+Use `templates/agent_handoff.md` to record each handoff.
+
+## Reference
+
+- `config/agents.yaml` — full role definitions with skills, handoff_to, receives_from
+- `config/pipeline.yaml` — machine-readable 10-stage pipeline (v2.0)
+- `config/tasks.yaml` — task definitions with skill mappings
+- `config/rules.yaml` — rule + skill index
+- `skills/` — 22 SKILL.md definitions
+- `COLLABORATION.md` — human-readable overview (not for AI execution)

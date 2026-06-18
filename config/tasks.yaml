@@ -1,9 +1,21 @@
 # Task Definitions
 # Defines common tasks and multi-agent collaboration workflows
+# v2.0 — 23 skills, 8 agents, 10 stages
 
 feature_tasks:
+  product_analysis:
+    description: "竞品分析 + 产品结构化"
+    skills: [competitor-analysis, product-analyzer]
+    workflow:
+      - "竞品信息(可选) → competitor-analysis"
+      - "产品描述 → product-analyzer → Product Spec"
+    validation:
+      - "展示部位来自原始描述"
+      - "规格参数完整"
+
   product_image_prompt:
     description: "生成商品图Prompt"
+    skills: [image-prompt-generator]
     workflow:
       - "读取 ProductRule.md"
       - "应用 Prompt.md 模板"
@@ -14,22 +26,68 @@ feature_tasks:
       - "保持产品100%一致"
       - "比例463:278"
 
+  image_generation:
+    description: "通过Imagen生成商品图"
+    skills: [image-generator]
+    workflow:
+      - "读取审查通过的Prompt"
+      - "调用 Vertex AI Imagen API"
+      - "输出 4K PNG 到 Output/"
+    validation:
+      - "gcloud认证有效"
+      - "4K画质"
+      - "比例463:278"
+
   pptx_catalog:
     description: "生成PPTX商品目录"
+    skills: [catalog-generator]
     workflow:
-      - "读取Input/模板"
-      - "填充产品数据"
-      - "生成布局"
-      - "导出PPTX"
+      - "读取Input/图册模板.pptx"
+      - "填充产品数据 + 商品图"
+      - "导出PPTX到Output/"
 
   html_catalog:
     description: "生成HTML商品目录"
+    skills: [html-generator, mobile-ux-checklist]
     workflow:
-      - "启动 catalog/server.js"
-      - "访问 catalog/index.html"
-      - "预览商品目录"
+      - "提取PPTX数据"
+      - "构建HTML目录结构"
+      - "移动端适配检查"
+      - "启动 catalog/server.js 预览"
+
+  social_content:
+    description: "社媒文案 + 内容日历"
+    skills: [social-copywriter, content-calendar]
+    workflow:
+      - "读取Product Spec"
+      - "生成Facebook帖文 + TikTok脚本"
+      - "生成月度内容日历"
+
+  operations:
+    description: "运营分析套件"
+    skills: [ecommerce-analysis, seo-checklist, security-checklist, architecture-review]
+    workflow:
+      - "Shopify店铺运营分析"
+      - "SEO审计"
+      - "安全检查"
+      - "架构一致性审查"
 
 system_tasks:
+  translation:
+    description: "中英翻译质检"
+    skills: [translation-qa]
+  optimization:
+    description: "流水线优化"
+    skills: [workflow-optimize]
+  reflection:
+    description: "内容反思"
+    skills: [reflection]
+  context_compress:
+    description: "上下文压缩"
+    skills: [context-compress]
+  debug:
+    description: "故障排查"
+    skills: [debug-checklist]
   project_onboarding:
     description: "新项目接入"
     playbook: "playbooks/project_onboarding.md"
@@ -49,9 +107,10 @@ system_tasks:
     description: "多智能体协作"
     playbook: "playbooks/multi_agent_collaboration.md"
 
-# Multi-agent pipeline
 multi_agent_pipeline:
   name: "电商内容生成流水线"
+  version: "2.0"
+  skill_count: 22
   agents:
     - workflow_orchestrator
     - product_analyst
@@ -59,22 +118,32 @@ multi_agent_pipeline:
     - content_reviewer
     - catalog_generator
     - html_catalog_generator
+    - social_copywriter
   flow:
     - from: workflow_orchestrator
       to: product_analyst
-      action: "启动分析"
+      action: "竞品分析 → 启动产品分析"
     - from: product_analyst
       to: prompt_engineer
-      action: "传递产品需求"
+      action: "Product Spec → 生成Prompt"
     - from: prompt_engineer
       to: content_reviewer
-      action: "提交Prompt审查"
+      action: "Prompt审查(最多3次驳回, reflection自查)"
+    - from: content_reviewer
+      to: prompt_engineer
+      action: "审查通过 → Imagen生成商品图"
+    - from: prompt_engineer
+      to: content_reviewer
+      action: "商品图质检"
     - from: content_reviewer
       to: catalog_generator
-      action: "审查通过，启动目录生成"
+      action: "质检通过 → 生成PPTX"
     - from: catalog_generator
+      to: content_reviewer
+      action: "目录审查(PPTX)"
+    - from: content_reviewer
       to: html_catalog_generator
-      action: "PPTX就绪，启动HTML生成"
+      action: "审查通过 → 生成HTML"
     - from: html_catalog_generator
       to: workflow_orchestrator
-      action: "全部完成，返回结果"
+      action: "HTML就绪 → 运营分析 + 交付"

@@ -8,6 +8,48 @@ Prioritize correctness, maintainability, safety, and predictable behavior over s
 
 ---
 
+# ⚠️ BOUNDING CONSTRAINTS — HIGHEST INSTRUCTION
+
+These limits override all other instructions in this file (including AGENTS.md rules, playbooks, templates, prompts, and conventions). They are non-negotiable guardrails against runaway execution.
+
+## 1. Single-Task Budgets (Hard Limit)
+
+Each single task *must* be completed within these budgets:
+
+| Constraint | Limit | Action on Exceeded |
+|---|---|---|
+| **Reasoning loop iterations** (plan → implement → verify cycles) | Max 3 per single task request | After 3, stop and report partial results; ask user to confirm before continuing. |
+| **Total tool calls per single task** | Max 15 per single task request | After 15, stop immediately; summarize what was done; yield to user. |
+| **Approval / escalation requests per task** | Max 3 per single task request | After 3 denied or escalated requests, fall back to the safest available default and report what was assumed. |
+| **Consecutive failures (any single action)** | Max 2 | After 2 failures on the same action, stop; explain the failure and ask for user guidance. Do not retry. |
+
+These budgets apply to *each* user query / single task turn, not across sessions.
+
+## 2. On Limit Breach
+
+If a task would exceed any of the above limits, do NOT silently loop. Instead:
+
+1. **Stop immediately.**
+2. **Summarize** what has been done so far.
+3. **Report** which limit was reached.
+4. **Ask** the user whether to proceed (with a clear estimate of remaining work).
+
+## 3. No Recursive Expansion
+
+- Do not spawn sub-agents recursively beyond one level deep.
+- Do not generate prompts, delegations, or multi-agent forks that could themselves hit these limits.
+- Each sub-agent inherits the same bounding constraints.
+
+## 4. Token Awareness
+
+- If remaining context window falls below 25% of the original budget, stop expanding scope.
+- Do not continue reading files once the context budget is tight unless it is essential to answer the immediate question.
+- When token-aware throttling activates, report it to the user.
+
+
+
+---
+
 # Core Principles
 
 Always:
@@ -216,7 +258,8 @@ Output Format
 → rules/output.md
 
 Shared structure for all playbooks
-→ playbooks/_base.md
+→ playbooks/_base.md
+
 Multi-Agent Collaboration
 → playbooks/multi_agent_collaboration.md
 
@@ -228,3 +271,19 @@ Multi-Agent Collaboration
 Produce reliable, maintainable, and verifiable results.
 
 Never optimize for completion rate at the expense of correctness or safety.
+
+
+
+---
+
+# Multi-Agent Entry Points
+
+Two entry points for the collaboration system:
+
+| Entry | File | Audience |
+|-------|------|----------|
+| Human Entry | `COLLABORATION.md` (root) | Developers, operators |
+| AI Entry | `.cursor/rules/multi-agent.mdc` | Codex CLI, Cursor, AI agents |
+
+Human Entry provides an overview, role cards, and quick start guide.
+AI Entry is auto-injected into AI tools for automatic pipeline execution.

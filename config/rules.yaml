@@ -1,5 +1,5 @@
 # Rule Configuration Index
-# Central index of all rules, playbooks, templates, prompts
+# Central index of all rules, playbooks, templates, prompts, skills
 
 priorities:
   - source: "用户指令"
@@ -10,12 +10,14 @@ priorities:
     priority: 3
   - source: "playbooks/*"
     priority: 4
-  - source: "templates/*"
+  - source: "skills/*"
     priority: 5
-  - source: "prompts/*"
+  - source: "templates/*"
     priority: 6
-  - source: "项目约定"
+  - source: "prompts/*"
     priority: 7
+  - source: "项目约定"
+    priority: 8
 
 rules_index:
   architecture: "rules/architecture.md"
@@ -35,3 +37,34 @@ playbooks_index:
   feature: "playbooks/full_feature.md"
   onboarding: "playbooks/project_onboarding.md"
   release: "playbooks/release_process.md"
+  multi_agent: "playbooks/multi_agent_collaboration.md"
+
+skills_index:
+  production:
+    - product-analyzer
+    - image-prompt-generator
+    - image-generator
+    - catalog-generator
+    - html-generator
+  review:
+    - prompt-review
+    - prompt-refactor
+    - image-quality-review
+    - listing-review
+    - code-review
+    - translation-qa
+    - reflection
+  operations:
+    - competitor-analysis
+    - ecommerce-analysis
+    - seo-checklist
+    - security-checklist
+    - mobile-ux-checklist
+    - content-calendar
+    - architecture-review
+    - debug-checklist
+  orchestration:
+    - context-compress
+    - workflow-optimize
+  social:
+    - social-copywriter

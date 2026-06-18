@@ -2,6 +2,93 @@
 
 ---
 
+
+---
+
+## v0.6.2
+
+Date: 2026-06-18
+
+### Added
+
+- skills/translation-qa/ — 中英翻译质量审查
+- skills/workflow-optimize/ — 流水线优化
+- skills/reflection/ — 内容反思与自检
+
+### Changed
+
+- content_reviewer +2skill(共6), workflow_orchestrator +1skill(共8)
+- 最终：23 Skill | 8 Agent | 8 Phase完整闭环
+
+---
+
+## v0.6.1
+
+Date: 2026-06-18
+
+### Added
+
+- skills/image-generator/ — Vertex AI Imagen商品图生成
+- scripts/generate_images.py — Python批量调用Imagen
+- Input/prompts_batch.json — 3款产品批处理Prompt
+
+### Changed
+
+- prompt_engineer 新增 image-generator，从Gem Image迁移至Imagen
+
+---
+
+## v0.6
+
+Date: 2026-06-18
+
+### Added
+
+- 电商运营与质量Skill(8个)，针对hpdun.com+HPD+@hpdun3
+  - seo-checklist, security-checklist, mobile-ux-checklist, content-calendar
+  - ecommerce-analysis, code-review, architecture-review, debug-checklist
+
+### Changed
+
+- Skill总数升至19，所有Agent重新绑定
+
+---
+
+## v0.5.1
+
+Date: 2026-06-18
+
+### Added
+
+- skills/competitor-analysis/ — 竞品分析Skill
+
+### Changed
+
+- workflow_orchestrator 新增 competitor-analysis 绑定和handoff路径
+
+---
+
+## v0.5
+
+Date: 2026-06-18
+
+### Added
+
+- Skill系统初始化：skills/目录，10个核心Skill
+  - product-analyzer, image-prompt-generator, catalog-generator, html-generator
+  - image-quality-review, prompt-review, prompt-refactor
+  - listing-review, social-copywriter, context-compress
+- config/agents.yaml：6个Agent绑定对应Skill
+
+### Changed
+
+- config/agents.yaml：新增skills:字段
+- config/agents.yaml：新增social_copywriter Agent
+
+---
+
+-
+
 ## v0.4
 
 Date: 2026-06-17
