@@ -1,0 +1,48 @@
+# Ecommerce-Agent Docker Compose v0.6.2
+# Usage: docker compose up -d
+#        docker compose run --rm pipeline node scripts/pipeline/runner.js
+
+services:
+  mcp-server:
+    build: .
+    container_name: ecommerce-mcp
+    env_file: .env
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Input:/app/Input:ro
+      - ./Output:/app/Output
+    command: ["node", "mcp-server/index.js"]
+
+  catalog:
+    build: .
+    container_name: ecommerce-catalog
+    env_file: .env
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./Output:/app/Output:ro
+    command: ["node", "catalog/server.js"]
+
+  pipeline:
+    build: .
+    container_name: ecommerce-pipeline
+    env_file: .env
+    stdin_open: true
+    volumes:
+      - ./Input:/app/Input:ro
+      - ./Output:/app/Output
+    command: ["node", "scripts/pipeline/runner.js"]
+    profiles:
+      - pipeline
+
+  mock-images:
+    build: .
+    container_name: ecommerce-mock-images
+    volumes:
+      - ./Input:/app/Input:ro
+      - ./Output:/app/Output
+    command: ["node", "scripts/generate_images_mock.js", "--batch", "Input/prompts_batch.json"]
+    profiles:
+      - pipeline

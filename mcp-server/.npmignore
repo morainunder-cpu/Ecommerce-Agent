@@ -1,0 +1,17 @@
+# Dev files
+node_modules/
+.git/
+.env
+.env.example
+*.log
+
+# Test files
+__tests__/
+*.test.js
+*.spec.js
+
+# Config files
+.claude/
+.cursor/
+.github/
+skills-index.json
