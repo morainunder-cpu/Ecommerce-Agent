@@ -1,0 +1,1 @@
+﻿import { Workbook } from '@oai/artifact-tool'; const wb = Workbook.create(); const s = wb.worksheets.add('t'); console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(s)).filter(k => k.startsWith('insert') || k.includes('Insert') || k.includes('Row')).join('\n'));
