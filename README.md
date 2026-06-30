@@ -61,7 +61,6 @@ Ecommerce-Agent/
 │   ├── tasks.json                # 任务定义
 │   └── 图册模板.pptx             # PPTX 模板
 ├── Output/                       # 生成产物 (PPTX + PNG)
-├── Examples/                     # 实际使用示例
 └── catalog/                      # HTML 产品目录
     ├── index.html
     └── server.js
@@ -141,7 +140,7 @@ cd catalog && node server.js
 ## MCP Server (社区分发)
 
 ```bash
-cd mcp-server
+cd mcp
 npm install
 node index.js --self-test
 ```
