@@ -1,4 +1,4 @@
-﻿# PROJECT CONTEXT — Ecommerce-Agent v0.6.2
+# PROJECT CONTEXT — Ecommerce-Agent v0.7
 
 > **AI 阅读入口** | 本文件是仓库最重要的入口文档，AI Agent 应在任务开始时优先阅读。
 > **最后更新**：2026-06-30 | **维护者**：Codex AI Agent
@@ -8,7 +8,7 @@
 ## 1. 项目概览
 
 **项目名称**：Ecommerce-Agent（电商智能体内容工厂）
-**版本**：v0.6.2
+**版本**：v0.7
 **定位**：基于多智能体协作的跨境电商内容生成流水线，覆盖 Shopify + Facebook + TikTok 三大平台。
 **核心能力**：产品分析 → Prompt生成 → AI图像生成 → 质量审查 → PPTX/HTML目录 → 运营分析 → 社交媒体文案
 
@@ -27,10 +27,10 @@
 ### 2.1 当前目录树
 
 ```
-Ecommerce-Agent/                           — v0.6.2, 23 skills, 8 agents
+Ecommerce-Agent/                           — v0.7, 23 skills, 8 agents
 ├── Agents.md                              — AI Agent 入口指令（BOUNDING CONSTRAINTS + 核心原则）
 ├── README.md                              — 项目首页说明
-├── CHANGELOG.md                           — v0.1 → v0.6.2 版本历史
+├── CHANGELOG.md                           — v0.1 → v0.7 版本历史
 ├── COLLABORATION.md                       — 人类可读的多Agent协作流程
 ├── skills-index.json                      — 23 skill 机器可读索引
 ├── .env / .env.example                    — 环境变量配置

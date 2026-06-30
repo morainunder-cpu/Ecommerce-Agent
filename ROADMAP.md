@@ -1,10 +1,10 @@
-﻿# ROADMAP — Ecommerce-Agent 开发计划
+# ROADMAP — Ecommerce-Agent 开发计划
 
-> **当前版本**：v0.6.2 | **最后更新**：2026-06-30
+> **当前版本**：v0.7 | **最后更新**：2026-06-30
 
 ---
 
-## 已完成 (v0.1 → v0.6.2)
+## 已完成 (v0.1 → v0.7)
 
 | 版本 | 日期 | 里程碑 |
 |------|------|--------|
@@ -16,20 +16,18 @@
 | v0.6.0 | 2026-06 | 审查闭环：image-quality-review, listing-review, code-review |
 | v0.6.1 | 2026-06-18 | image-generator Skill + Python 批量脚本 |
 | v0.6.2 | 2026-06-18 | translation-qa, workflow-optimize, reflection（23 Skill / 8 Agent） |
+| v0.7 | 2026-06-30 | 仓库重构：docs/、目录重组、4份新文档、编码修复 |
 
 ---
 
-## 近期计划 (v0.7)
+## 近期计划 (v0.8)
 
-- [ ] 仓库结构重构（docs/ 集中文档、目录清理）
-- [ ] 消除 skills/ 重复副本（mcp-server/skills/ → skills/ 统一）
 - [ ] 完善 tests/ 测试覆盖
-- [ ] 修复中文文件名编码问题
 - [ ] CI/CD 流水线验证
 
 ---
 
-## 中期计划 (v0.8)
+## 中期计划 (v0.9)
 
 - [ ] 多语言支持扩展（英语、日语）
 - [ ] 视频内容生成（TikTok 短视频脚本 → 视频）

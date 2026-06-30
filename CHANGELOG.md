@@ -1,9 +1,41 @@
-# Changelog
+﻿# Changelog
 
 ---
 
 
 ---
+
+
+## v0.7
+
+Date: 2026-06-30
+
+### Added
+
+- `PROJECT_CONTEXT.md` — AI 阅读入口，含完整仓库分析、组件清单、问题诊断、重构映射
+- `ARCHITECTURE.md` — 系统架构图、数据流、技术栈与设计原则
+- `ROADMAP.md` — v0.1→v0.7 版本历史 + v0.8/v1.0 路线图
+- `CONTRIBUTING.md` — 开发规范、目录约定、Skill/Agent/Pipeline 开发指南
+- `docs/` 目录 — 集中文档入口，收纳 playbooks、examples、命令模板
+- `agents/` 目录 — Agent 定义占位
+
+### Changed
+
+- **目录重组**：
+  - `mcp-server/` → `mcp/`（命名简化）
+  - `scripts/` → `tools/`（语义更清晰）
+  - `scripts/pipeline/` → `pipeline/`（提升到根目录）
+  - `playbooks/` → `docs/playbooks/`（文档集中管理）
+  - `Examples/` → `docs/examples/`（示例归入 docs）
+  - `commands/` → `docs/`（命令模板归入 docs）
+- **松散文档归位**：`GemPrompt.md`、`ProductRule.md` 移至 `docs/`，`Prompt.md` 移至 `prompts/`
+- **路径引用更新**：`config/rules.yaml`、`.cursor/rules/multi-agent.mdc`、`.cursor/rules/project-overview.mdc`、`knowledge/architecture_notes.md` 同步更新旧路径
+- **PowerShell 编码修复**：InputEncoding/OutputEncoding 统一为 UTF-8，解决中文文件名乱码
+- `.gitignore` 更新：新增 `tmp/`、`Video/`、`text/` 排除
+
+### Fixed
+
+- 删除 3 个空目录：`playbooks/`、`Examples/`、`tools/`（占位但无内容）
 
 ## v0.6.2
 
