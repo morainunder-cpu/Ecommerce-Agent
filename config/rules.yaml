@@ -1,4 +1,4 @@
-# Rule Configuration Index
+﻿# Rule Configuration Index
 # Central index of all rules, playbooks, templates, prompts, skills
 
 priorities:
@@ -8,7 +8,7 @@ priorities:
     priority: 2
   - source: "rules/*"
     priority: 3
-  - source: "playbooks/*"
+  - source: "docs/playbooks/*"
     priority: 4
   - source: "skills/*"
     priority: 5
@@ -32,12 +32,12 @@ rules_index:
   summarize: "rules/summarize.md"
 
 playbooks_index:
-  code_review: "playbooks/code_review.md"
-  bugfix: "playbooks/emergency_bugfix.md"
-  feature: "playbooks/full_feature.md"
-  onboarding: "playbooks/project_onboarding.md"
-  release: "playbooks/release_process.md"
-  multi_agent: "playbooks/multi_agent_collaboration.md"
+  code_review: "docs/playbooks/code_review.md"
+  bugfix: "docs/playbooks/emergency_bugfix.md"
+  feature: "docs/playbooks/full_feature.md"
+  onboarding: "docs/playbooks/project_onboarding.md"
+  release: "docs/playbooks/release_process.md"
+  multi_agent: "docs/playbooks/multi_agent_collaboration.md"
 
 skills_index:
   production:

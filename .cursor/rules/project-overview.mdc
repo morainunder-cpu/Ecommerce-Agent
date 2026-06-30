@@ -1,4 +1,4 @@
----
+﻿---
 description: Ecommerce-Agent v0.6.2 project overview — 8 agents, 23 skills, Shopify+Facebook+TikTok
 globs: **/*
 alwaysApply: true
@@ -34,10 +34,10 @@ config/
   tasks.yaml     — task definitions (v2.0)
   rules.yaml     — rule + skill index
 
-playbooks/
+docs/playbooks/
   multi_agent_collaboration.md — 10-phase execution playbook (v2.0)
 
-scripts/
+tools/
   generate_images.py — Vertex AI Imagen batch generation
 ```
 

@@ -75,3 +75,8 @@ Input/舒特/专利/一种耐洗性能阻燃防护服jpg.jpg
 Input/舒特/专利/一种防静电、抗静电性能优良的阻燃服.jpg
 /Input
 /Output
+
+# Temp files
+tmp/
+Video/
+text/

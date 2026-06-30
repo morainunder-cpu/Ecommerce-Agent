@@ -1,4 +1,4 @@
----
+﻿---
 description: Multi-agent collaboration entry for AI agents
 globs: **/*.md
 alwaysApply: true
