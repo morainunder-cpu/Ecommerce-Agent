@@ -1,4 +1,4 @@
-﻿# AI Development OS
+# AI Development OS
 
 ## Mission
 
@@ -69,7 +69,7 @@ Ask instead of guessing.
 # Project Architecture
 
 ```
-Ecommerce-Agent/                           — v0.6.2, 23 skills, 8 agents
+Ecommerce-Agent/                           — v0.7, 23 skills, 8 agents
 ├── skills/                                — 23 agent skill definitions
 │   ├── product-analyzer/                  — Phase 2: product analysis
 │   ├── image-prompt-generator/            — Phase 3: prompt generation
@@ -99,20 +99,20 @@ Ecommerce-Agent/                           — v0.6.2, 23 skills, 8 agents
 │   ├── pipeline.yaml                      — 10-stage pipeline (v2.0)
 │   ├── tasks.yaml                         — Task definitions (v2.0)
 │   └── rules.yaml                         — Skill index + priorities
-├── scripts/
+├── tools/
 │   ├── generate_images.py                 — Imagen batch generation
 │   └── pipeline/                          — Pipeline executor
 │       ├── config.json                    — Pipeline config
 │       ├── runner.js                      — Pipeline runner (node_repl)
 │       └── stage-executor.js              — Stage execution engine
-├── mcp-server/                            — Community MCP Server (npm)
+├── mcp/                            — Community MCP Server (npm)
 │   ├── package.json                       — npm package definition
 │   ├── index.js                           — 5 community tools
 │   └── skills/                            — Skill copies for distribution
 ├── catalog/                               — HTML preview
 │   ├── index.html
 │   └── server.js
-├── playbooks/
+├── docs/playbooks/
 │   ├── _base.md                           — Shared template structure
 │   ├── multi_agent_collaboration.md        — Full execution guide
 │   └── checklists/                        — Specialized checklists
@@ -136,7 +136,7 @@ Ecommerce-Agent/                           — v0.6.2, 23 skills, 8 agents
 ├── Agents.md                              — Entry point (this file)
 ├── README.md                              — Project overview
 ├── COLLABORATION.md                       — Human-readable pipeline
-├── CHANGELOG.md                           — v0.1 → v0.6.2 history
+├── CHANGELOG.md                           — v0.1 → v0.7 history
 ├── skills-index.json                      — 23-skill machine-readable index
 └── .env.example                           — Environment template
 ```
@@ -186,7 +186,7 @@ Always follow this priority order:
 1. User instructions
 2. AGENT.md
 3. rules/*
-4. playbooks/*
+4. docs/playbooks/*
 5. templates/*
 6. prompts/*
 7. Existing project conventions
@@ -282,7 +282,7 @@ When appropriate, follow specialized documents:
 ## Core Pipeline (v2.0, 10 phases)
 
 Multi-Agent Content Pipeline
-→ playbooks/multi_agent_collaboration.md
+→ docs/playbooks/multi_agent_collaboration.md
 
 ## Skill Execution
 
@@ -297,33 +297,33 @@ Each agent invokes skills from skills/ directory:
 
 ## Pipeline Executor
 
-→ scripts/pipeline/runner.js  (node_repl loaded)
-→ scripts/pipeline/stage-executor.js
+→ pipeline/runner.js  (node_repl loaded)
+→ pipeline/stage-executor.js
 
 ## MCP Server (Community Distribution)
 
-→ mcp-server/index.js  (5 community tools)
-→ mcp-server/package.json
+→ mcp/index.js  (5 community tools)
+→ mcp/package.json
 
 ## Feature Development
 
-→ playbooks/full_feature.md
+→ docs/playbooks/full_feature.md
 
 ## Emergency Bug Fix
 
-→ playbooks/emergency_bugfix.md
+→ docs/playbooks/emergency_bugfix.md
 
 ## Code Review
 
-→ playbooks/code_review.md
+→ docs/playbooks/code_review.md
 
 ## Release
 
-→ playbooks/release_process.md
+→ docs/playbooks/release_process.md
 
 ## Project Onboarding
 
-→ playbooks/project_onboarding.md
+→ docs/playbooks/project_onboarding.md
 
 ## Project Summary
 
@@ -339,11 +339,11 @@ Each agent invokes skills from skills/ directory:
 
 ## Shared structure for all playbooks
 
-→ playbooks/_base.md
+→ docs/playbooks/_base.md
 
 ## Multi-Agent Collaboration
 
-→ playbooks/multi_agent_collaboration.md
+→ docs/playbooks/multi_agent_collaboration.md
 
 ## Skill Reference
 

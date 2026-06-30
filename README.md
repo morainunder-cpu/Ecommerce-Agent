@@ -1,4 +1,4 @@
-﻿# Ecommerce-Agent v0.6.2
+# Ecommerce-Agent v0.7
 
 > 舒特工贸 (Xinjiang Shute Industry & Trade) 多智能体电商内容生成管线
 >
@@ -22,7 +22,7 @@
 Ecommerce-Agent/
 ├── Agents.md                     # AI 开发操作系统入口
 ├── README.md                     # 项目概览（本文件）
-├── CHANGELOG.md                  # v0.1 → v0.6.2 完整变更记录
+├── CHANGELOG.md                  # v0.1 → v0.7 完整变更记录
 ├── skills-index.json             # 23 Skill 机器可读索引
 ├── .env.example                  # 环境变量模板
 ├── .gitignore
@@ -40,7 +40,7 @@ Ecommerce-Agent/
 ├── .github/workflows/            # CI/CD
 │   └── ci.yml                    # Markdown lint + 文件检查 + YAML 校验
 ├── rules/                        # AI 行为规则 (11 文件)
-├── playbooks/                    # 标准操作规程 (10 文件)
+├── docs/playbooks/                    # 标准操作规程 (10 文件)
 │   ├── _base.md                  # 共享模板结构
 │   ├── multi_agent_collaboration.md  # 多智能体完整执行指南
 │   └── checklists/               # 专项检查表 (5 文件)
@@ -52,10 +52,7 @@ Ecommerce-Agent/
 │   ├── glossary.md               # 术语表（人读）
 │   └── glossary.yaml             # 术语表（机读）
 ├── skills/                       # ⭐ 23 自定义电商 Skill (SKILL.md each)
-├── scripts/                      # 脚本工具
-│   ├── generate_images.py        # Vertex AI Imagen 批量生图
-│   └── pipeline/                 # 管线执行器 (config.json + runner.js + stage-executor.js)
-├── mcp-server/                   # 🚀 社区 MCP Server (npm 分发包)
+├── tools/                        # 脚本工具（图像生成、平台集成）\r\n│   ├── generate_images.py        # Vertex AI Imagen 批量生图\r\n│   ├── apply_seo_fixes.py        # SEO 修复应用\r\n│   └── integrations/             # Facebook/Shopify/TikTok 集成\r\n├── pipeline/                     # 管线执行引擎\r\n│   ├── config.json\r\n│   ├── runner.js\r\n│   └── stage-executor.js\r\n├── docs/                         # 集中文档\r\n│   ├── playbooks/                # 执行剧本\r\n│   └── examples/                 # 使用示例\r\n├── agents/                       # Agent 定义\r\n├── mcp/                   # 🚀 社区 MCP Server (npm 分发包)
 │   ├── package.json
 │   ├── index.js                  # 5 个社区工具
 │   └── skills/                   # Skill 副本
@@ -108,7 +105,7 @@ Phase 7-8: catalog-generator → listing-review → PPTX
 Phase 9-10: html-generator → ops analysis → delivery
 ```
 
-详细参见 `playbooks/multi_agent_collaboration.md`
+详细参见 `docs/playbooks/multi_agent_collaboration.md`
 
 ---
 
@@ -133,7 +130,7 @@ pip install google-cloud-aiplatform
 gcloud auth application-default login
 
 # 3. 批量生成商品图
-python scripts/generate_images.py --batch Input/prompts_batch.json
+python tools/generate_images.py --batch Input/prompts_batch.json
 
 # 4. 预览 HTML 目录
 cd catalog && node server.js
@@ -156,8 +153,8 @@ node index.js --self-test
 ## 参考
 
 - `AGENTS.md` — AI 开发操作系统
-- `playbooks/multi_agent_collaboration.md` — 完整多智能体执行指南
+- `docs/playbooks/multi_agent_collaboration.md` — 完整多智能体执行指南
 - `config/agents.yaml` — Agent + Skill 绑定定义
 - `config/pipeline.yaml` — 管线 v2.0 定义
-- `CHANGELOG.md` — v0.1 → v0.6.2 完整历史
+- `CHANGELOG.md` — v0.1 → v0.7 完整历史
 - `skills-index.json` — 23 Skill 机器可读索引
